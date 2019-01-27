@@ -1,0 +1,44 @@
+# DP-
+import java.util.Scanner;
+
+public class StrSimilarity {
+    /*
+     * 字符串相似度DP
+     *给定一个源串和目标串，能够对源串作如下操作：
+     *1、修改一个字符
+     *2、增加一个字符
+     *3、删除一个字符
+     *则，把源串通过如上的三种操作之后变成目标串的最小操作次数定义为两个串的距离，而相似度等于
+     *“距离+1的 倒数”。
+     *求其距离和相似度。
+     * */
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String str1 = input.nextLine();
+        String str2 = input.nextLine();
+        int result = 0;
+        if (str1.length() == 0) result = str2.length();
+        else if (str2.length() == 0) result = str1.length();
+        else {
+            int dp[][] = new int[str1.length() + 1][str2.length() + 1];
+            for (int i = 0; i < str1.length(); i++) {
+                dp[i][str2.length()] = str1.length() - i;
+            }
+            for (int i = 0; i < str2.length(); i++) {
+                dp[str1.length()][i] = str2.length() - i;
+            }
+            dp[str1.length()][str2.length()] = 0;
+
+            for (int i = str1.length() - 1; i >= 0; i--) {
+                for (int j = str2.length() - 1; j >= 0; j--) {
+                    if (str1.charAt(i) == str2.charAt(j)) dp[i][j] = dp[i + 1][j + 1];
+                    else {
+                        dp[i][j] = Math.min(Math.min(dp[i][j + 1], dp[i + 1][j]), dp[i + 1][j + 1]) + 1;
+                    }
+                }
+            }
+            result = dp[0][0];
+        }
+        System.out.println(result);
+    }
+}
