@@ -1,0 +1,26 @@
+在一个夜黑风高的晚上，有n（n <= 50）个小朋友在桥的这边，现在他们需要过桥，但是由于桥很窄，每次只允许不大于两人通过，他们只有一个手电筒，所以每次过桥的两个人需要把手电筒带回来，i号小朋友过桥的时间为T[i]，两个人过桥的总时间为二者中时间长者。问所有小朋友过桥的总时间最短是多少。
+两种方法  一种是备忘录DP  另外一种是省略空间的DP
+public class ChildrenCrossingTheBridge {
+    public static void main(String[] args) {
+        int n = 4;
+        int p[] = {0,1,2,5,10};
+        int dp[] = new int[n + 1];
+        dp[2] = p[2];
+        for (int i = 3; i < dp.length; i++) {
+            dp[i] = Math.min(dp[i - 1] + p[1] + p[i],dp[i - 2] + p[1] + p[i] + 2 * p[2]);
+        }
+
+        System.out.println(dp[n]);
+
+        int f1 = p[2];
+        int f2 = 0;
+        int result = 0;
+        for (int i = 3; i < n + 1; i++) {
+            result = Math.min(p[1] + p[i] + f1,f2 + p[1] + 2 * p[2] + p[i]);
+            f2 = f1;
+            f1 = result;
+        }
+
+        System.out.println(result);
+    }
+}
