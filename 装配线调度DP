@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+public class AssemblyLineScheduling {
+    //    装配线调度
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int e1 = input.nextInt(), e2 = input.nextInt();
+        int x1 = input.nextInt(), x2 = input.nextInt();
+        int a1[] = new int[n], a2[] = new int[n];
+        int l1[] = new int[n - 1], l2[] = new int[n - 1];
+        int f1[] = new int[n], f2[] = new int[n];
+        int road1[] = new int[n], road2[] = new int[n];
+        for (int i = 0; i < a1.length; i++) {
+            a1[i] = input.nextInt();
+        }
+        for (int i = 0; i < a2.length; i++) {
+            a2[i] = input.nextInt();
+        }
+        for (int i = 0; i < l1.length; i++) {
+            l1[i] = input.nextInt();
+        }
+        for (int i = 0; i < l2.length; i++) {
+            l2[i] = input.nextInt();
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (i == 0) {
+                f1[i] = e1 + a1[i];
+                f2[i] = e2 + a2[i];
+                road1[i] = 1;
+                road2[i] = 2;
+            } else if (i == n - 1) {
+                f1[i] = Math.min(a1[i] + f1[i - 1] + x1, l2[i - 1] + a1[i] + f2[i - 1] + x1);
+                f2[i] = Math.min(a2[i] + f2[i - 1] + x2, l1[i - 1] + a2[i] + f1[i - 1] + x2);
+                road1[i] = 1;
+                road2[i] = 2;
+            } else {
+                if (a1[i] + f1[i - 1] > l2[i - 1] + a1[i] + f2[i - 1]) {
+                    road1[i] = 1;
+                } else {
+                    road1[i] = 2;
+                }
+                f1[i] = Math.min(a1[i] + f1[i - 1], l2[i - 1] + a1[i] + f2[i - 1]);
+                if (a2[i] + f2[i - 1] > l1[i - 1] + a2[i] + f1[i - 1]) {
+                    road2[i] = 2;
+                } else {
+                    road2[i] = 1;
+                }
+                f2[i] = Math.min(a2[i] + f2[i - 1], l1[i - 1] + a2[i] + f1[i - 1]);
+            }
+        }
+
+        for (int i = 0; i < f1.length; i++) {
+            System.out.print(f1[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < road1.length; i++) {
+            System.out.print(road1[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < f2.length; i++) {
+            System.out.print(f2[i] + " ");
+        }
+        System.out.println();
+        for (int i = 0; i < road2.length; i++) {
+            System.out.print(road2[i] + " ");
+        }
+    }
+}
+//6
+//2 4
+//3 2
+//7 9 3 4 8 4
+//8 5 6 4 5 7
+//2 3 1 3 4
+//2 1 2 2 1
