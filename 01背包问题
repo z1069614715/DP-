@@ -1,0 +1,40 @@
+要注意01背包问题是只能取一次  所以DP时要注意是[i - 1]!!!!!!!
+public class Bag {
+    //    01背包问题
+    public static void main(String[] args) {
+        int wight[] = {2, 2, 6, 5, 4};
+        int prize[] = {6, 3, 5, 4, 6};
+        int dp[][] = new int[wight.length + 1][10 + 1];
+
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[i].length; j++) {
+                if (j >= wight[i - 1]) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - wight[i - 1]] + prize[i - 1]);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[i].length; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        int dp1[] = new int[11];
+
+        for (int i = 0; i < wight.length; i++) {
+            for (int j = dp1.length - 1; j > 0; j--) {
+                dp1[j] = wight[i] <= j ? Math.max(dp1[j], dp1[j - wight[i]] + prize[i]) : dp1[j];
+            }
+        }
+
+        System.out.println();
+
+        for (int i = 1; i < dp1.length; i++) {
+            System.out.print(dp1[i] + " ");
+        }
+    }
+}
