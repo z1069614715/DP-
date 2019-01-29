@@ -27,7 +27,7 @@ public class Bag {
 
         for (int i = 0; i < wight.length; i++) {
             for (int j = dp1.length - 1; j > 0; j--) {
-                dp1[j] = wight[i] <= j ? Math.max(dp1[j], dp1[j - wight[i]] + prize[i]) : dp1[j];
+                dp1[j] = Math.max(dp1[j - wight[i]] + prize[i],dp1[j]);
             }
         }
 
