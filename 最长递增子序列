@@ -1,0 +1,27 @@
+public class LIS {
+    //    最长递增子序列
+    public static void main(String[] args) {
+        int arr[] = {4, 5, 9, 3, 1};
+
+        int dp[] = new int[arr.length];
+
+        int l = 0;
+
+        for (int i = 0; i < dp.length; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) max = Math.max(max, dp[j]); //根据前面的推导后面的
+            }
+            dp[i] = max + 1;
+            l = Math.max(dp[i], l);
+        }
+
+        for (int i = 0; i < dp.length; i++) {
+            System.out.print(dp[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println(l);
+    }
+}
