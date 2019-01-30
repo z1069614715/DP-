@@ -25,3 +25,4 @@ public class LIS {
         System.out.println(l);
     }
 }
+//还有另外一种解法  就是排序后  求两个的最长公共子序列
