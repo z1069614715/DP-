@@ -1,0 +1,29 @@
+public class LCIS {
+    //    最长公共递增子序列
+    public static void main(String[] args) {
+        int arr[] = {1,4,2,5,8,6,-12,2,4,5,6,8};
+        int brr[] = {-12,1,2,4,6,8,6};
+        
+        int dp[][] = new int[2][brr.length + 1];
+
+        int L = 0;
+
+        for (int i = 1; i < arr.length + 1; i++) {
+            int maxn = 0;
+            for (int j = 1; j < brr.length + 1; j++) {
+                if (arr[i - 1] > brr[j - 1]){
+                    maxn = Math.max(maxn,dp[(i + 1) % 2][j]);
+                }
+                if (arr[i - 1] == brr[j - 1]){
+                    dp[i % 2][j] = maxn + 1;
+                }else {
+                    dp[i % 2][j] = dp[(i + 1) % 2][j];
+                }
+                L = Math.max(L,dp[i % 2][j]);
+            }
+        }
+
+        System.out.println(L);
+    }
+}
+//https://www.cnblogs.com/WArobot/p/7479431.html
