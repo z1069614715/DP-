@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class IntSplit {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int mod = 1000000000;
+        int arr[] = new int[n + 1];
+        arr[0] = 1;
+        arr[1] = 1;
+        for (int index = 2; index < arr.length; index+=2) {
+            arr[index] = (arr[index - 1] + arr[index / 2]) % mod;
+            if (index + 1 <= n) arr[index + 1] = arr[index];
+        }
+        System.out.println(arr[n]);
+    }
+}
+//150688
+//804217110
